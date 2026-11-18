@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>万事达汇率换算 · Mastercard FX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-base: #eef2f9;
+      --bg-radial-1: rgba(235, 0, 27, 0.08);
+      --bg-radial-2: rgba(247, 158, 27, 0.11);
+      --bg-radial-3: rgba(59, 130, 246, 0.10);
+      --surface-card: rgba(255, 255, 255, 0.78);
+      --surface-card-strong: rgba(255, 255, 255, 0.92);
+      --surface-subtle: rgba(15, 23, 42, 0.045);
+      --surface-subtle-hover: rgba(15, 23, 42, 0.08);
+      --border-card: rgba(255, 255, 255, 0.85);
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --accent: #e11d48;
+      --accent-warm: #f59e0b;
+      --accent-blue: #2563eb;
+      --shadow-card: 0 12px 32px -12px rgba(15, 23, 42, 0.10), 0 1px 2px rgba(15, 23, 42, 0.04);
+
+      /* iOS Liquid Glass Floating Pill (Light) */
+      --lg-shell-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.42));
+      --lg-shell-border: rgba(255, 255, 255, 0.78);
+      --lg-shell-shadow:
+        0 18px 42px -10px rgba(15, 23, 42, 0.18),
+        0 4px 14px -2px rgba(15, 23, 42, 0.08),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.92),
+        inset 0 -1px 1px rgba(15, 23, 42, 0.06);
+      --lg-pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(244, 247, 252, 0.78));
+      --lg-pill-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.10),
+        inset 0 1px 1px rgba(255, 255, 255, 1),
+        inset 0 -1px 1px rgba(15, 23, 42, 0.05);
+      --lg-text-active: #0f172a;
+      --lg-text-idle: #475569;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-base: #070b14;
+        --bg-radial-1: rgba(235, 0, 27, 0.14);
+        --bg-radial-2: rgba(247, 158, 27, 0.11);
+        --bg-radial-3: rgba(56, 189, 248, 0.12);
+        --surface-card: rgba(20, 28, 46, 0.72);
+        --surface-card-strong: rgba(28, 38, 60, 0.88);
+        --surface-subtle: rgba(255, 255, 255, 0.065);
+        --surface-subtle-hover: rgba(255, 255, 255, 0.11);
+        --border-card: rgba(255, 255, 255, 0.11);
+        --border-subtle: rgba(255, 255, 255, 0.09);
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent: #fb7185;
+        --accent-warm: #fbbf24;
+        --accent-blue: #60a5fa;
+        --shadow-card: 0 18px 40px -14px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35);
+
+        /* iOS Liquid Glass Floating Pill (Dark) */
+        --lg-shell-bg: linear-gradient(135deg, rgba(36, 46, 70, 0.62), rgba(18, 24, 38, 0.52));
+        --lg-shell-border: rgba(255, 255, 255, 0.20);
+        --lg-shell-shadow:
+          0 22px 48px -10px rgba(0, 0, 0, 0.65),
+          0 6px 18px -2px rgba(0, 0, 0, 0.35),
+          inset 0 1.5px 1px rgba(255, 255, 255, 0.26),
+          inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+        --lg-pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.10));
+        --lg-pill-shadow:
+          0 6px 18px rgba(0, 0, 0, 0.32),
+          inset 0 1px 1px rgba(255, 255, 255, 0.35),
+          inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+        --lg-text-active: #ffffff;
+        --lg-text-idle: #94a3b8;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg-base: #070b14;
+      --bg-radial-1: rgba(235, 0, 27, 0.14);
+      --bg-radial-2: rgba(247, 158, 27, 0.11);
+      --bg-radial-3: rgba(56, 189, 248, 0.12);
+      --surface-card: rgba(20, 28, 46, 0.72);
+      --surface-card-strong: rgba(28, 38, 60, 0.88);
+      --surface-subtle: rgba(255, 255, 255, 0.065);
+      --surface-subtle-hover: rgba(255, 255, 255, 0.11);
+      --border-card: rgba(255, 255, 255, 0.11);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --accent: #fb7185;
+      --accent-warm: #fbbf24;
+      --accent-blue: #60a5fa;
+      --shadow-card: 0 18px 40px -14px rgba(0, 0, 0, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35);
+
+      --lg-shell-bg: linear-gradient(135deg, rgba(36, 46, 70, 0.62), rgba(18, 24, 38, 0.52));
+      --lg-shell-border: rgba(255, 255, 255, 0.20);
+      --lg-shell-shadow:
+        0 22px 48px -10px rgba(0, 0, 0, 0.65),
+        0 6px 18px -2px rgba(0, 0, 0, 0.35),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.26),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.35);
+      --lg-pill-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.10));
+      --lg-pill-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.32),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.25);
+      --lg-text-active: #ffffff;
+      --lg-text-idle: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg-base);
+      background-image:
+        radial-gradient(circle at 12% 10%, var(--bg-radial-1), transparent 42%),
+        radial-gradient(circle at 88% 16%, var(--bg-radial-2), transparent 40%),
+        radial-gradient(circle at 50% 85%, var(--bg-radial-3), transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      transition: background-color 0.35s ease, color 0.25s ease;
+    }
+
+    .app-shell {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 18px 16px 118px;
+    }
+
+    /* Header */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--surface-card-strong);
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 9999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .icon-pill-btn:hover {
+      background: var(--surface-card-strong);
+      color: var(--text-primary);
+    }
+
+    .icon-pill-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Status Banner */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 14px;
+      background: var(--surface-card);
+      border: 1px solid var(--border-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .status-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      flex-shrink: 0;
+    }
+
+    .status-dot.loading {
+      background: #f59e0b;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.22);
+      animation: pulse 1.2s infinite;
+    }
+
+    .status-dot.snapshot {
+      background: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    .status-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .refresh-btn {
+      border: none;
+      background: var(--surface-subtle);
+      color: var(--text-primary);
+      border-radius: 9999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .refresh-btn:hover {
+      background: var(--surface-subtle-hover);
+    }
+
+    .refresh-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--surface-card);
+      border: 1px solid var(--border-card);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .converter-stack {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .currency-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .currency-select-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .currency-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px 34px 10px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      min-width: 158px;
+      max-width: 100%;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .currency-select:hover {
+      background: var(--surface-subtle-hover);
+    }
+
+    .currency-select:focus {
+      outline: 2px solid var(--accent-blue);
+      outline-offset: 1px;
+    }
+
+    .select-chevron {
+      position: absolute;
+      right: 11px;
+      pointer-events: none;
+      color: var(--text-muted);
+    }
+
+    .amount-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .amount-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      padding: 4px 0;
+      outline: none;
+    }
+
+    .amount-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.45;
+    }
+
+    .result-value {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      color: var(--text-primary);
+      word-break: break-all;
+      line-height: 1.15;
+    }
+
+    .quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .chip-btn {
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-subtle);
+      color: var(--text-secondary);
+      border-radius: 9999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip-btn:hover {
+      background: var(--surface-subtle-hover);
+      color: var(--text-primary);
+    }
+
+    .chip-btn.active {
+      background: var(--text-primary);
+      color: var(--bg-base);
+      border-color: transparent;
+    }
+
+    /* Swap Button */
+    .swap-row {
+      display: flex;
+      justify-content: center;
+      margin: -20px 0;
+      z-index: 3;
+    }
+
+    .swap-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border-card);
+      background: var(--surface-card-strong);
+      color: var(--text-primary);
+      box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.22);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+    }
+
+    .swap-btn:hover {
+      transform: scale(1.06);
+    }
+
+    .swap-btn.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Breakdown Card */
+    .breakdown-card {
+      margin-top: 14px;
+    }
+
+    .breakdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .mc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, rgba(235, 0, 27, 0.12), rgba(247, 158, 27, 0.14));
+      color: var(--text-primary);
+    }
+
+    .breakdown-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .breakdown-key {
+      color: var(--text-muted);
+    }
+
+    .breakdown-val {
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 0;
+    }
+
+    /* Rates List View */
+    .search-box {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-subtle);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    .search-box:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .rates-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rate-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: var(--surface-subtle);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.15s ease, border-color 0.18s ease;
+    }
+
+    .rate-item:hover {
+      background: var(--surface-subtle-hover);
+      border-color: var(--border-subtle);
+    }
+
+    .rate-item:active {
+      transform: scale(0.985);
+    }
+
+    .rate-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .flag-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 11px;
+      background: var(--surface-card-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .rate-code {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .rate-name {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .rate-item-right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rate-mc-num {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .rate-mid-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Mastercard Settings View */
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    .section-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0 0 14px;
+    }
+
+    .fee-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .range-input {
+      flex: 1;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .override-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .text-input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: var(--surface-subtle);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      outline: none;
+    }
+
+    .primary-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--text-primary);
+      color: var(--bg-base);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.97);
+    }
+
+    .official-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-decoration: none;
+    }
+
+    .official-link:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================
+       iOS Liquid Glass Floating Pill Bottom Navigation
+       ========================================================== */
+    .liquid-nav-dock {
+      position: fixed;
+      left: 50%;
+      bottom: max(18px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      z-index: 50;
+      width: min(calc(100vw - 28px), 372px);
+    }
+
+    .liquid-nav-pill {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 6px;
+      border-radius: 9999px;
+      background: var(--lg-shell-bg);
+      border: 1px solid var(--lg-shell-border);
+      box-shadow: var(--lg-shell-shadow);
+      backdrop-filter: blur(28px) saturate(195%);
+      -webkit-backdrop-filter: blur(28px) saturate(195%);
+      overflow: hidden;
+    }
+
+    /* Specular glass sheen across top edge */
+    .liquid-nav-pill::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.32) 0%,
+        rgba(255, 255, 255, 0.04) 42%,
+        transparent 100%
+      );
+      pointer-events: none;
+    }
+
+    .liquid-active-indicator {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: calc((100% - 12px) / 3);
+      height: calc(100% - 12px);
+      border-radius: 9999px;
+      background: var(--lg-pill-bg);
+      box-shadow: var(--lg-pill-shadow);
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .liquid-nav-btn {
+      position: relative;
+      z-index: 2;
+      border: none;
+      background: transparent;
+      color: var(--lg-text-idle);
+      padding: 8px 4px;
+      border-radius: 9999px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.22s ease, transform 0.15s ease;
+    }
+
+    .liquid-nav-btn.active {
+      color: var(--lg-text-active);
+    }
+
+    .liquid-nav-btn:active {
+      transform: scale(0.94);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-16px);
+      padding: 9px 16px;
+      border-radius: 9999px;
+      background: var(--surface-card-strong);
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-primary);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 80;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 400px) {
+      .amount-input, .result-value {
+        font-size: 28px;
+      }
+      .currency-select {
+        min-width: 136px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="26" height="16" viewBox="0 0 26 16" fill="none">
+            <circle cx="9" cy="8" r="7" fill="#EB001B" />
+            <circle cx="17" cy="8" r="7" fill="#F79E1B" fill-opacity="0.88" />
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">万事达汇率换算</div>
+          <div class="brand-sub">Mastercard 每日结算参考</div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <button id="theme-toggle-btn" class="icon-pill-btn" type="button" title="切换外观主题">
+          <span id="theme-icon">🌓</span>
+          <span id="theme-label">跟随系统</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Live Rate Status Bar -->
+    <div class="status-bar">
+      <div class="status-left">
+        <span id="status-dot" class="status-dot loading"></span>
+        <span id="status-text" class="status-text">正在获取今日实时汇率…</span>
+      </div>
+      <button id="refresh-rates-btn" class="refresh-btn" type="button">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+          <polyline points="21 3 21 9 15 9" />
+        </svg>
+        刷新
+      </button>
+    </div>
+
+    <!-- VIEW 1: Converter -->
+    <main id="view-converter">
+      <div class="converter-stack">
+        <!-- From Card -->
+        <section class="glass-card">
+          <div class="currency-card-head">
+            <span class="card-label">消费 / 持有币种</span>
+            <span id="from-unit-hint" class="card-label">USD</span>
+          </div>
+          <div class="amount-row">
+            <div class="currency-select-wrap">
+              <select id="from-currency" class="currency-select" aria-label="选择源货币"></select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+            </div>
+            <input id="amount-input" class="amount-input" type="number" inputmode="decimal" min="0" step="any" value="100" aria-label="输入换算金额" placeholder="0.00" />
+          </div>
+          <div class="quick-chips" id="quick-amounts">
+            <button type="button" class="chip-btn active" data-amt="100">100</button>
+            <button type="button" class="chip-btn" data-amt="500">500</button>
+            <button type="button" class="chip-btn" data-amt="1000">1,000</button>
+            <button type="button" class="chip-btn" data-amt="5000">5,000</button>
+            <button type="button" class="chip-btn" data-amt="10000">10,000</button>
+          </div>
+        </section>
+
+        <!-- Swap Button -->
+        <div class="swap-row">
+          <button id="swap-btn" class="swap-btn" type="button" title="互换两种货币" aria-label="互换两种货币">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 16V4M7 4L3 8M7 4l4 4" />
+              <path d="M17 8v12m0 0l4-4m-4 4l-4-4" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- To Card -->
+        <section class="glass-card">
+          <div class="currency-card-head">
+            <span class="card-label">万事达卡折算入账金额</span>
+            <button id="copy-result-btn" class="refresh-btn" type="button">复制结果</button>
+          </div>
+          <div class="amount-row">
+            <div class="currency-select-wrap">
+              <select id="to-currency" class="currency-select" aria-label="选择目标货币"></select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+            </div>
+            <div id="result-display" class="result-value">668.62</div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Mastercard Breakdown Card -->
+      <section class="glass-card breakdown-card">
+        <div class="breakdown-header">
+          <span class="mc-badge">
+            <svg width="16" height="10" viewBox="0 0 26 16" fill="none" aria-hidden="true">
+              <circle cx="9" cy="8" r="7" fill="#EB001B" />
+              <circle cx="17" cy="8" r="7" fill="#F79E1B" fill-opacity="0.9" />
+            </svg>
+            <span id="rate-mode-label">万事达参考汇率</span>
+          </span>
+          <span id="rate-date-label" class="card-label">2026-11-18</span>
+        </div>
+
+        <div class="breakdown-grid">
+          <div class="breakdown-row">
+            <span class="breakdown-key">万事达结算汇率</span>
+            <span id="mc-rate-line" class="breakdown-val">1 USD = 6.6862 CNY</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-key">反向汇率</span>
+            <span id="mc-reverse-line" class="breakdown-val">1 CNY = 0.1496 USD</span>
+          </div>
+          <div class="divider"></div>
+          <div class="breakdown-row">
+            <span class="breakdown-key">实时市场中间价</span>
+            <span id="mid-rate-line" class="breakdown-val">1 USD = 6.6662 CNY</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-key">折算中间价金额</span>
+            <span id="mid-amount-line" class="breakdown-val">666.62 CNY</span>
+          </div>
+          <div class="breakdown-row">
+            <span class="breakdown-key">卡组织点差 + 银行手续费</span>
+            <span id="fee-summary-line" class="breakdown-val">+0.30% + 0.00%</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- VIEW 2: Live Rates Board -->
+    <section id="view-rates" class="glass-card hidden">
+      <div class="currency-card-head">
+        <div>
+          <h2 class="section-title">今日主要货币牌价</h2>
+          <div class="card-label">点击任意币种可直接载入换算器</div>
+        </div>
+        <div class="currency-select-wrap">
+          <select id="rates-base-select" class="currency-select" style="min-width: 112px; padding: 7px 28px 7px 10px; font-size: 13px;" aria-label="选择基准货币"></select>
+          <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+        </div>
+      </div>
+
+      <input id="rates-search" class="search-box" type="search" placeholder="搜索货币代码或中文名称（如 JPY / 日元）" aria-label="搜索货币" />
+      <div id="rates-list" class="rates-list"></div>
+    </section>
+
+    <!-- VIEW 3: Mastercard Rate Settings & Official Calibration -->
+    <section id="view-mastercard" class="hidden" style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="glass-card">
+        <h2 class="section-title">发卡行外币转换费（Bank Fee）</h2>
+        <p class="section-desc">免货币转换费卡片（如全币种信用卡或免货转借记卡）选 0%；普通双币卡通常为 1.5%。</p>
+        <div class="fee-presets" id="bank-fee-presets">
+          <button type="button" class="chip-btn active" data-fee="0">0% 免货转</button>
+          <button type="button" class="chip-btn" data-fee="1.0">1.0%</button>
+          <button type="button" class="chip-btn" data-fee="1.5">1.5%</button>
+          <button type="button" class="chip-btn" data-fee="2.0">2.0%</button>
+          <button type="button" class="chip-btn" data-fee="3.0">3.0%</button>
+        </div>
+
+        <div class="divider" style="margin: 14px 0;"></div>
+
+        <h2 class="section-title">万事达卡组织参考点差（Spread）</h2>
+        <p class="section-desc">纯前端页面无法直接跨域读取需 OAuth 鉴权的万事达私有接口，默认在实时市场中间价基础上叠加 0.30% 卡组织清算点差作为当日估算。</p>
+        <div class="slider-wrap">
+          <input id="spread-slider" class="range-input" type="range" min="0" max="1.5" step="0.05" value="0.30" aria-label="万事达卡组织点差百分比" />
+          <span id="spread-value" class="breakdown-val" style="min-width: 52px;">0.30%</span>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h2 class="section-title">官方牌价手动精准校准</h2>
+        <p class="section-desc">如果你已在万事达官网查到今日 <strong id="calib-pair-label">USD → CNY</strong> 的精确牌价，可直接输入覆盖当前估算值：</p>
+        <div class="override-row">
+          <input id="override-rate-input" class="text-input" type="number" step="any" min="0" placeholder="例如 6.6850" aria-label="输入万事达官方汇率" />
+          <button id="apply-override-btn" class="primary-btn" type="button">应用</button>
+          <button id="clear-override-btn" class="chip-btn" type="button">重置</button>
+        </div>
+        <a class="official-link" href="https://www.mastercard.com/global/en/personal/get-support/currency-exchange-rate-converter.html" target="_blank" rel="noopener noreferrer">
+          打开万事达卡官方汇率计算器
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" />
+            <line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- iOS Liquid Glass Floating Pill Bottom Navigation -->
+  <nav class="liquid-nav-dock" aria-label="主导航">
+    <div class="liquid-nav-pill" role="tablist">
+      <div id="nav-indicator" class="liquid-active-indicator" aria-hidden="true"></div>
+
+      <button class="liquid-nav-btn active" type="button" role="tab" aria-selected="true" data-tab="converter" data-index="0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 3h5v5" />
+          <path d="M4 20L21 3" />
+          <path d="M21 16v5h-5" />
+          <path d="M15 15l6 6" />
+          <path d="M4 4l5 5" />
+        </svg>
+        <span>汇率换算</span>
+      </button>
+
+      <button class="liquid-nav-btn" type="button" role="tab" aria-selected="false" data-tab="rates" data-index="1">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10" />
+          <line x1="12" y1="20" x2="12" y2="4" />
+          <line x1="6" y1="20" x2="6" y2="14" />
+        </svg>
+        <span>今日牌价</span>
+      </button>
+
+      <button class="liquid-nav-btn" type="button" role="tab" aria-selected="false" data-tab="mastercard" data-index="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="3" />
+          <line x1="2" y1="10" x2="22" y2="10" />
+        </svg>
+        <span>万事达卡</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    const CURRENCIES = [
+      { code: "USD", name: "美元", flag: "🇺🇸", symbol: "$" },
+      { code: "CNY", name: "人民币", flag: "🇨🇳", symbol: "¥" },
+      { code: "JPY", name: "日元", flag: "🇯🇵", symbol: "¥" },
+      { code: "EUR", name: "欧元", flag: "🇪🇺", symbol: "€" },
+      { code: "GBP", name: "英镑", flag: "🇬🇧", symbol: "£" },
+      { code: "HKD", name: "港币", flag: "🇭🇰", symbol: "HK$" },
+      { code: "SGD", name: "新加坡元", flag: "🇸🇬", symbol: "S$" },
+      { code: "AUD", name: "澳元", flag: "🇦🇺", symbol: "A$" },
+      { code: "CAD", name: "加元", flag: "🇨🇦", symbol: "C$" },
+      { code: "KRW", name: "韩元", flag: "🇰🇷", symbol: "₩" },
+      { code: "TWD", name: "新台币", flag: "🇹🇼", symbol: "NT$" },
+      { code: "THB", name: "泰铢", flag: "🇹🇭", symbol: "฿" },
+      { code: "CHF", name: "瑞士法郎", flag: "🇨🇭", symbol: "CHF" },
+      { code: "MYR", name: "马来西亚林吉特", flag: "🇲🇾", symbol: "RM" }
+    ];
+
+    // 2026-11-18 grounded fallback snapshot (1 USD = X)
+    const FALLBACK_RATES_USD = {
+      USD: 1.0,
+      CNY: 6.6662,
+      JPY: 159.30,
+      EUR: 0.9100,
+      GBP: 0.7581,
+      HKD: 7.8461,
+      SGD: 1.3380,
+      AUD: 1.5120,
+      CAD: 1.4291,
+      KRW: 1385.0,
+      TWD: 32.15,
+      THB: 34.45,
+      CHF: 0.8780,
+      MYR: 4.4200
+    };
+
+    const state = {
+      from: "USD",
+      to: "CNY",
+      amount: 100,
+      activeTab: "converter",
+      themeMode: "auto", // auto | light | dark
+      mcSpreadPct: 0.30,
+      bankFeePct: 0.0,
+      manualOverrideRate: null,
+      ratesUSD: { ...FALLBACK_RATES_USD },
+      rateSource: "loading",
+      lastUpdated: "2026-11-18",
+      ratesBase: "CNY",
+      ratesSearch: "",
+      swapRotated: false
+    };
+
+    const els = {
+      fromSelect: document.getElementById("from-currency"),
+      toSelect: document.getElementById("to-currency"),
+      amountInput: document.getElementById("amount-input"),
+      resultDisplay: document.getElementById("result-display"),
+      fromUnitHint: document.getElementById("from-unit-hint"),
+      swapBtn: document.getElementById("swap-btn"),
+      copyResultBtn: document.getElementById("copy-result-btn"),
+      mcRateLine: document.getElementById("mc-rate-line"),
+      mcReverseLine: document.getElementById("mc-reverse-line"),
+      midRateLine: document.getElementById("mid-rate-line"),
+      midAmountLine: document.getElementById("mid-amount-line"),
+      feeSummaryLine: document.getElementById("fee-summary-line"),
+      rateModeLabel: document.getElementById("rate-mode-label"),
+      rateDateLabel: document.getElementById("rate-date-label"),
+      statusDot: document.getElementById("status-dot"),
+      statusText: document.getElementById("status-text"),
+      refreshBtn: document.getElementById("refresh-rates-btn"),
+      themeToggleBtn: document.getElementById("theme-toggle-btn"),
+      themeIcon: document.getElementById("theme-icon"),
+      themeLabel: document.getElementById("theme-label"),
+      navIndicator: document.getElementById("nav-indicator"),
+      viewConverter: document.getElementById("view-converter"),
+      viewRates: document.getElementById("view-rates"),
+      viewMastercard: document.getElementById("view-mastercard"),
+      ratesBaseSelect: document.getElementById("rates-base-select"),
+      ratesSearch: document.getElementById("rates-search"),
+      ratesList: document.getElementById("rates-list"),
+      spreadSlider: document.getElementById("spread-slider"),
+      spreadValue: document.getElementById("spread-value"),
+      calibPairLabel: document.getElementById("calib-pair-label"),
+      overrideInput: document.getElementById("override-rate-input"),
+      applyOverrideBtn: document.getElementById("apply-override-btn"),
+      clearOverrideBtn: document.getElementById("clear-override-btn"),
+      toast: document.getElementById("toast")
+    };
+
+    let toastTimer = null;
+    function showToast(msg) {
+      els.toast.textContent = msg;
+      els.toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => els.toast.classList.remove("show"), 2000);
+    }
+
+    function getCurrencyMeta(code) {
+      return CURRENCIES.find((c) => c.code === code) || { code, name: code, flag: "💱", symbol: "" };
+    }
+
+    function populateSelects() {
+      const makeOptions = () =>
+        CURRENCIES.map((c) => `<option value="${c.code}">${c.flag} ${c.code} · ${c.name}</option>`).join("");
+      els.fromSelect.innerHTML = makeOptions();
+      els.toSelect.innerHTML = makeOptions();
+      els.ratesBaseSelect.innerHTML = CURRENCIES.map((c) => `<option value="${c.code}">${c.flag} ${c.code}</option>`).join("");
+
+      els.fromSelect.value = state.from;
+      els.toSelect.value = state.to;
+      els.ratesBaseSelect.value = state.ratesBase;
+    }
+
+    function getMidRate(from, to) {
+      if (from === to) return 1;
+      const rFrom = state.ratesUSD[from];
+      const rTo = state.ratesUSD[to];
+      if (!rFrom || !rTo) return 1;
+      return rTo / rFrom;
+    }
+
+    function getMastercardMultiplier() {
+      return (1 + state.mcSpreadPct / 100) * (1 + state.bankFeePct / 100);
+    }
+
+    function getEffectiveMcRate(from, to) {
+      if (from === to) return 1;
+      if (state.manualOverrideRate !== null && state.manualOverrideRate > 0) {
+        return state.manualOverrideRate;
+      }
+      return getMidRate(from, to) * getMastercardMultiplier();
+    }
+
+    function formatMoney(num, code) {
+      const zeroDecimal = code === "JPY" || code === "KRW";
+      const digits = zeroDecimal ? 0 : 2;
+      return num.toLocaleString("en-US", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function formatRate(rate) {
+      if (rate >= 100) return rate.toFixed(2);
+      if (rate >= 10) return rate.toFixed(3);
+      return rate.toFixed(4);
+    }
+
+    function renderConverter() {
+      const amt = Number.isFinite(state.amount) && state.amount >= 0 ? state.amount : 0;
+      const midRate = getMidRate(state.from, state.to);
+      const mcRate = getEffectiveMcRate(state.from, state.to);
+      const reverseMcRate = mcRate > 0 ? 1 / mcRate : 0;
+
+      const convertedMc = amt * mcRate;
+      const convertedMid = amt * midRate;
+
+      els.fromUnitHint.textContent = getCurrencyMeta(state.from).name;
+      els.resultDisplay.textContent = formatMoney(convertedMc, state.to);
+      els.mcRateLine.textContent = `1 ${state.from} = ${formatRate(mcRate)} ${state.to}`;
+      els.mcReverseLine.textContent = `1 ${state.to} = ${formatRate(reverseMcRate)} ${state.from}`;
+      els.midRateLine.textContent = `1 ${state.from} = ${formatRate(midRate)} ${state.to}`;
+      els.midAmountLine.textContent = `${formatMoney(convertedMid, state.to)} ${state.to}`;
+      els.rateDateLabel.textContent = state.lastUpdated;
+      els.calibPairLabel.textContent = `${state.from} → ${state.to}`;
+
+      if (state.manualOverrideRate !== null) {
+        els.rateModeLabel.textContent = "万事达官方校准汇率";
+        els.feeSummaryLine.textContent = "已使用手动校准牌价";
+      } else {
+        els.rateModeLabel.textContent = "万事达参考汇率";
+        els.feeSummaryLine.textContent = `+${state.mcSpreadPct.toFixed(2)}% + ${state.bankFeePct.toFixed(2)}%`;
+      }
+
+      document.querySelectorAll("#quick-amounts .chip-btn").forEach((btn) => {
+        btn.classList.toggle("active", Number(btn.dataset.amt) === amt);
+      });
+    }
+
+    function renderRatesBoard() {
+      const base = state.ratesBase;
+      const q = state.ratesSearch.trim().toLowerCase();
+      const filtered = CURRENCIES.filter((c) => {
+        if (c.code === base) return false;
+        if (!q) return true;
+        return c.code.toLowerCase().includes(q) || c.name.toLowerCase().includes(q);
+      });
+
+      if (filtered.length === 0) {
+        els.ratesList.innerHTML = `<div class="card-label" style="text-align:center;padding:24px 0;">未找到匹配的货币</div>`;
+        return;
+      }
+
+      els.ratesList.innerHTML = filtered
+        .map((c) => {
+          const mid = getMidRate(c.code, base);
+          const mc = mid * getMastercardMultiplier();
+          return `
+            <div class="rate-item" data-code="${c.code}">
+              <div class="rate-item-left">
+                <div class="flag-circle">${c.flag}</div>
+                <div>
+                  <div class="rate-code">${c.code} / ${base}</div>
+                  <div class="rate-name">1 ${c.name} 兑换${getCurrencyMeta(base).name}</div>
+                </div>
+              </div>
+              <div class="rate-item-right">
+                <div class="rate-mc-num">${formatRate(mc)}</div>
+                <div class="rate-mid-sub">中间价 ${formatRate(mid)}</div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderTheme() {
+      const root = document.documentElement;
+      if (state.themeMode === "auto") {
+        root.removeAttribute("data-theme");
+        els.themeIcon.textContent = "🌓";
+        els.themeLabel.textContent = "跟随系统";
+      } else if (state.themeMode === "light") {
+        root.setAttribute("data-theme", "light");
+        els.themeIcon.textContent = "☀️";
+        els.themeLabel.textContent = "浅色";
+      } else {
+        root.setAttribute("data-theme", "dark");
+        els.themeIcon.textContent = "🌙";
+        els.themeLabel.textContent = "深色";
+      }
+    }
+
+    function switchTab(tabName, index) {
+      state.activeTab = tabName;
+      els.navIndicator.style.transform = `translateX(${index * 100}%)`;
+
+      document.querySelectorAll(".liquid-nav-btn").forEach((btn) => {
+        const isActive = btn.dataset.tab === tabName;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      els.viewConverter.classList.toggle("hidden", tabName !== "converter");
+      els.viewRates.classList.toggle("hidden", tabName !== "rates");
+      els.viewMastercard.classList.toggle("hidden", tabName !== "mastercard");
+
+      if (tabName === "rates") renderRatesBoard();
+    }
+
+    function updateStatusUI(mode, text) {
+      els.statusDot.className = "status-dot";
+      if (mode === "loading") els.statusDot.classList.add("loading");
+      if (mode === "snapshot") els.statusDot.classList.add("snapshot");
+      els.statusText.textContent = text;
+    }
+
+    async function fetchLiveRates(isManual = false) {
+      updateStatusUI("loading", "正在同步实时汇率…");
+      try {
+        const res = await fetch("https://open.er-api.com/v6/latest/USD");
+        if (!res.ok) throw new Error("Primary API error");
+        const data = await res.json();
+        if (data && data.result === "success" && data.rates) {
+          const merged = { ...FALLBACK_RATES_USD };
+          CURRENCIES.forEach((c) => {
+            if (typeof data.rates[c.code] === "number") {
+              merged[c.code] = data.rates[c.code];
+            }
+          });
+          state.ratesUSD = merged;
+          state.rateSource = "live";
+          const dt = data.time_last_update_utc ? new Date(data.time_last_update_utc) : new Date();
+          state.lastUpdated = dt.toISOString().slice(0, 10);
+          updateStatusUI("live", `实时汇率已同步 · open.er-api.com (${state.lastUpdated})`);
+          renderConverter();
+          if (state.activeTab === "rates") renderRatesBoard();
+          if (isManual) showToast("已更新至最新实时汇率");
+          return;
+        }
+        throw new Error("Invalid primary payload");
+      } catch (_) {
+        try {
+          const res2 = await fetch("https://api.frankfurter.app/latest?from=USD");
+          if (!res2.ok) throw new Error("Secondary API error");
+          const data2 = await res2.json();
+          if (data2 && data2.rates) {
+            const merged = { ...FALLBACK_RATES_USD, USD: 1 };
+            Object.keys(data2.rates).forEach((k) => {
+              merged[k] = data2.rates[k];
+            });
+            state.ratesUSD = merged;
+            state.rateSource = "frankfurter";
+            state.lastUpdated = data2.date || new Date().toISOString().slice(0, 10);
+            updateStatusUI("live", `ECB 参考汇率已同步 · frankfurter.app (${state.lastUpdated})`);
+            renderConverter();
+            if (state.activeTab === "rates") renderRatesBoard();
+            if (isManual) showToast("已更新 ECB 参考汇率");
+            return;
+          }
+          throw new Error("Invalid secondary payload");
+        } catch (__) {
+          state.ratesUSD = { ...FALLBACK_RATES_USD };
+          state.rateSource = "snapshot";
+          state.lastUpdated = "2026-11-18";
+          updateStatusUI("snapshot", "当前使用本地基准汇率快照 (2026-11-18)");
+          renderConverter();
+          if (state.activeTab === "rates") renderRatesBoard();
+          if (isManual) showToast("网络受限，已使用本地基准快照");
+        }
+      }
+    }
+
+    // Event Listeners
+    els.fromSelect.addEventListener("change", (e) => {
+      state.from = e.target.value;
+      state.manualOverrideRate = null;
+      els.overrideInput.value = "";
+      renderConverter();
+    });
+
+    els.toSelect.addEventListener("change", (e) => {
+      state.to = e.target.value;
+      state.manualOverrideRate = null;
+      els.overrideInput.value = "";
+      renderConverter();
+    });
+
+    els.amountInput.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value);
+      state.amount = Number.isFinite(val) && val >= 0 ? val : 0;
+      renderConverter();
+    });
+
+    document.getElementById("quick-amounts").addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip-btn");
+      if (!btn) return;
+      const amt = Number(btn.dataset.amt);
+      state.amount = amt;
+      els.amountInput.value = String(amt);
+      renderConverter();
+    });
+
+    els.swapBtn.addEventListener("click", () => {
+      const tmp = state.from;
+      state.from = state.to;
+      state.to = tmp;
+      state.manualOverrideRate = null;
+      els.overrideInput.value = "";
+      els.fromSelect.value = state.from;
+      els.toSelect.value = state.to;
+      state.swapRotated = !state.swapRotated;
+      els.swapBtn.classList.toggle("rotated", state.swapRotated);
+      renderConverter();
+    });
+
+    els.copyResultBtn.addEventListener("click", async () => {
+      const text = `${els.resultDisplay.textContent} ${state.to}`;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        showToast(`已复制：${text}`);
+      } catch (_) {
+        showToast("复制失败，请手动选择");
+      }
+    });
+
+    els.refreshBtn.addEventListener("click", () => fetchLiveRates(true));
+
+    els.themeToggleBtn.addEventListener("click", () => {
+      const order = ["auto", "light", "dark"];
+      const next = order[(order.indexOf(state.themeMode) + 1) % order.length];
+      state.themeMode = next;
+      try {
+        localStorage.setItem("mc_fx_theme", next);
+      } catch (_) {}
+      renderTheme();
+    });
+
+    document.querySelectorAll(".liquid-nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        switchTab(btn.dataset.tab, Number(btn.dataset.index));
+      });
+    });
+
+    els.ratesBaseSelect.addEventListener("change", (e) => {
+      state.ratesBase = e.target.value;
+      renderRatesBoard();
+    });
+
+    els.ratesSearch.addEventListener("input", (e) => {
+      state.ratesSearch = e.target.value;
+      renderRatesBoard();
+    });
+
+    els.ratesList.addEventListener("click", (e) => {
+      const item = e.target.closest(".rate-item");
+      if (!item) return;
+      state.from = item.dataset.code;
+      state.to = state.ratesBase;
+      state.manualOverrideRate = null;
+      els.overrideInput.value = "";
+      els.fromSelect.value = state.from;
+      els.toSelect.value = state.to;
+      renderConverter();
+      switchTab("converter", 0);
+      showToast(`已载入 ${state.from} → ${state.to}`);
+    });
+
+    document.getElementById("bank-fee-presets").addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip-btn");
+      if (!btn) return;
+      state.bankFeePct = Number(btn.dataset.fee);
+      document.querySelectorAll("#bank-fee-presets .chip-btn").forEach((b) => {
+        b.classList.toggle("active", b === btn);
+      });
+      renderConverter();
+      showToast(`发卡行手续费已设为 ${state.bankFeePct.toFixed(1)}%`);
+    });
+
+    els.spreadSlider.addEventListener("input", (e) => {
+      state.mcSpreadPct = Number(e.target.value);
+      els.spreadValue.textContent = `${state.mcSpreadPct.toFixed(2)}%`;
+      renderConverter();
+    });
+
+    els.applyOverrideBtn.addEventListener("click", () => {
+      const val = parseFloat(els.overrideInput.value);
+      if (!Number.isFinite(val) || val <= 0) {
+        showToast("请输入有效的正数汇率");
+        return;
+      }
+      state.manualOverrideRate = val;
+      renderConverter();
+      showToast("已应用官方校准汇率");
+    });
+
+    els.clearOverrideBtn.addEventListener("click", () => {
+      state.manualOverrideRate = null;
+      els.overrideInput.value = "";
+      renderConverter();
+      showToast("已恢复自动估算汇率");
+    });
+
+    // Listen to OS dark/light mode changes in real time
+    if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        if (state.themeMode === "auto") renderTheme();
+      });
+    }
+
+    // Init
+    (function init() {
+      try {
+        const savedTheme = localStorage.getItem("mc_fx_theme");
+        if (savedTheme === "auto" || savedTheme === "light" || savedTheme === "dark") {
+          state.themeMode = savedTheme;
+        }
+      } catch (_) {}
+      populateSelects();
+      renderTheme();
+      renderConverter();
+      fetchLiveRates(false);
+    })();
+  </script>
+</body>
+</html>
